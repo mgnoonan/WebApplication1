@@ -13,7 +13,7 @@
 <meta property="og:image" content="http://www.publix.com/~/media/aprons/images/2014/11/14/17/44/poul0167_600x440.ashx" />
 }
 
-<!--  -->
+
 
 <div class="jumbotron">
     <h1>Desktop site</h1>
@@ -29,5 +29,81 @@
             If you don't know what this web site is, or why it is here, you are probably in the
             wrong place.
         </p>
+        
+        
+        <div class="socialIcons">
+                <div id="fb-root"></div>
+                <div class="facebookLike">
+                    <div class="fb-like" data-href="" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="pinIt">
+                    <a class="pinHref" href="" target="_blank" data-pin-do="buttonPin" data-pin-config="beside">
+                        <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" />
+                    </a>
+                </div>
+            </div>
+            
+        
     </div>
 </div>
+
+<script>
+$(document).ready(function(){
+    var facebookLike = function facebookImplementation() {
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '218770528164917',
+                xfbml: true,
+                version: 'v2.0'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    }
+    facebookLike();
+    
+       // New Version of Pinterest through SocialTools.ascx
+        if ($('meta[property="og:image"]').attr('content') && $('meta[property="og:description"]').attr('content')) {
+
+            // pinterest static var, does not require encoding.
+            var pinterestButton = "http://www.pinterest.com/pin/create/button/?url=";
+            // get media (image) 
+            var imgEncoded = encodeURIComponent($('meta[property="og:image"]').attr('content'));
+            // get description
+            var description = $('meta[property="og:description"]').attr('content').trim();
+            var descriptionEncoded = encodeURIComponent(description + appendTextChecked);
+            // put them all together
+            var togetherEncoded = pinterestButton + encodeURIComponent(window.location.href) + "&media=" + imgEncoded + "&description=" + descriptionEncoded
+            $('.pinHref').attr('href', togetherEncoded);
+
+        }
+        // Old Method, featured products page, recipes & meals
+        else if ($('.js-pinItImage').length && $('.js-pinItDescription').length) {
+
+            // pinterest static var, does not require encoding.
+            var pinterestButton = "http://www.pinterest.com/pin/create/button/?url=";
+            // get media (image) 
+            var imgEncoded = encodeURIComponent($('.js-pinItImage')[0].src);
+            // get description
+            var description = $('.js-pinItDescription').html().trim();
+            var descriptionEncoded = encodeURIComponent(description + appendTextChecked);
+            // put them all together
+            var togetherEncoded = pinterestButton + encodeURIComponent(window.location.href) + "&media=" + imgEncoded + "&description=" + descriptionEncoded
+            $('.pinHref').attr('href', togetherEncoded);
+
+        }
+        else {
+            // since the video exists and the image does not, hide the pinterest button.
+            $('.pinIt').addClass('hide');
+        }
+    
+});
+
+
+</script>
