@@ -116,7 +116,7 @@ $(document).ready(function(){
             var descriptionEncoded = encodeURIComponent(description + appendTextChecked);
             // put them all together
             var togetherEncoded = pinterestButton + encodeURIComponent(window.location.href) + "&media=" + imgEncoded + "&description=" + descriptionEncoded
-            //$('.pinHref').attr('href', togetherEncoded);
+            $('.pinHref').attr('href', togetherEncoded);
 
         }
          /*
