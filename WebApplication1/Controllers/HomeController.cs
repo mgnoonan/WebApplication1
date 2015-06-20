@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
 
@@ -11,24 +9,36 @@ namespace WebApplication1.Controllers
     {
         public ActionResult Index()
         {
-            Repository repository = new Repository();
+            // Create document with incoming parameter values
+            var agent = new Agent
+            {
+                id = Guid.NewGuid().ToString(),
+                BrowserAgent = HttpContext.Request.UserAgent,
+                IpAddress = HttpContext.Request.UserHostAddress,
+                Referrer = HttpContext.Request.UrlReferrer == null ? "" : HttpContext.Request.UrlReferrer.ToString(),
+                PageType = "Desktop",
+                Timestamp = DateTime.Now
+            };
 
-            repository.SaveBrowserAgent(HttpContext.Request.UserAgent,
-                HttpContext.Request.UserHostAddress,
-                HttpContext.Request.UrlReferrer,
-                "Desktop");
+            Repository<Agent>.SaveDocument(agent);
 
             return View();
         }
 
         public ActionResult Mobile()
         {
-            Repository repository = new Repository();
+            // Create document with incoming parameter values
+            var agent = new Agent
+            {
+                id = Guid.NewGuid().ToString(),
+                BrowserAgent = HttpContext.Request.UserAgent,
+                IpAddress = HttpContext.Request.UserHostAddress,
+                Referrer = HttpContext.Request.UrlReferrer == null ? "" : HttpContext.Request.UrlReferrer.ToString(),
+                PageType = "Mobile",
+                Timestamp = DateTime.Now
+            };
 
-            repository.SaveBrowserAgent(HttpContext.Request.UserAgent,
-                HttpContext.Request.UserHostAddress,
-                HttpContext.Request.UrlReferrer,
-                "Mobile");
+            Repository<Agent>.SaveDocument(agent);
 
             return View();
         }

@@ -1,75 +1,167 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.Azure.Documents;
+﻿using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Documents.Linq;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace WebApplication1.Models
 {
-    public class Repository
+    public static class Repository<T>
     {
         private static string _endpointUrl = ConfigurationManager.AppSettings["EndpointUrl"];
         private static string _authorizationKey = ConfigurationManager.AppSettings["AuthorizationKey"];
 
-        public async Task<Database> CreateOrGetDatabase(DocumentClient client, string databaseID)
+        //Use the Database if it exists, if not create a new Database
+        private static Database ReadOrCreateDatabase()
         {
-            var databases = client.CreateDatabaseQuery().Where(db => db.Id == databaseID).ToList();
+            var db = Client.CreateDatabaseQuery()
+                            .Where(d => d.Id == DatabaseId)
+                            .AsEnumerable()
+                            .FirstOrDefault();
 
-            if (databases.Any())
-                return databases.First();
-
-            return await client.CreateDatabaseAsync(new Database { Id = databaseID });
-        }
-
-        public async Task<DocumentCollection> CreateOrGetCollection(DocumentClient client, Database database, string collectionID)
-        {
-            var collections = client.CreateDocumentCollectionQuery(database.CollectionsLink)
-                                .Where(col => col.Id == collectionID).ToList();
-
-            if (collections.Any())
-                return collections.First();
-
-            return await client.CreateDocumentCollectionAsync(database.CollectionsLink,
-                new DocumentCollection
-                {
-                    Id = collectionID
-                });
-        }
-
-        public async Task SaveBrowserAgent(string agent, string ipAddress, Uri referrer, string pageType)
-        {
-            // Create a new instance of the DocumentClient
-            var client = new DocumentClient(new Uri(_endpointUrl), _authorizationKey);
-
-            var database = await CreateOrGetDatabase(client, "browsers");
-
-            var collection = await CreateOrGetCollection(client, database, "agents");
-
-            // Add test document
-            var document = new Agent
+            if (db == null)
             {
-                id = Guid.NewGuid().ToString(),
-                BrowserAgent = agent,
-                IpAddress = ipAddress,
-                Referrer = referrer == null ? "" : referrer.ToString(),
-                PageType = pageType,
-                Timestamp = DateTime.Now
-            };
+                db = Client.CreateDatabaseAsync(new Database { Id = DatabaseId }).Result;
+            }
 
+            return db;
+        }
+
+        //Use the DocumentCollection if it exists, if not create a new Collection
+        private static DocumentCollection ReadOrCreateCollection(string databaseLink)
+        {
+            var col = Client.CreateDocumentCollectionQuery(databaseLink)
+                              .Where(c => c.Id == CollectionId)
+                              .AsEnumerable()
+                              .FirstOrDefault();
+
+            if (col == null)
+            {
+                var collectionSpec = new DocumentCollection { Id = CollectionId };
+                var requestOptions = new RequestOptions { OfferType = "S1" };
+
+                col = Client.CreateDocumentCollectionAsync(databaseLink, collectionSpec, requestOptions).Result;
+            }
+
+            return col;
+        }
+
+        //Expose the "database" value from configuration as a property for internal use
+        private static string databaseId;
+        private static string DatabaseId
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(databaseId))
+                {
+                    databaseId = ConfigurationManager.AppSettings["database"];
+                }
+
+                return databaseId;
+            }
+        }
+
+        //Expose the "collection" value from configuration as a property for internal use
+        private static string collectionId;
+        private static string CollectionId
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(collectionId))
+                {
+                    collectionId = ConfigurationManager.AppSettings["collection"];
+                }
+
+                return collectionId;
+            }
+        }
+
+        //Use the ReadOrCreateDatabase function to get a reference to the database.
+        private static Database database;
+        private static Database Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = ReadOrCreateDatabase();
+                }
+
+                return database;
+            }
+        }
+
+        //Use the ReadOrCreateCollection function to get a reference to the collection.
+        private static DocumentCollection collection;
+        private static DocumentCollection Collection
+        {
+            get
+            {
+                if (collection == null)
+                {
+                    collection = ReadOrCreateCollection(Database.SelfLink);
+                }
+
+                return collection;
+            }
+        }
+
+        //This property establishes a new connection to DocumentDB the first time it is used, 
+        //and then reuses this instance for the duration of the application avoiding the
+        //overhead of instantiating a new instance of DocumentClient with each request
+        private static DocumentClient client;
+        private static DocumentClient Client
+        {
+            get
+            {
+                if (client == null)
+                {
+                    string endpoint = ConfigurationManager.AppSettings["EndpointUrl"];
+                    string authKey = ConfigurationManager.AppSettings["AuthorizationKey"];
+                    Uri endpointUri = new Uri(endpoint);
+                    client = new DocumentClient(endpointUri, authKey);
+                }
+
+                return client;
+            }
+        }
+
+        public static void SaveDocument(T document)
+        {
             try
             {
-                var newDocument = await client.CreateDocumentAsync(collection.DocumentsLink, document);
-                var code = newDocument.StatusCode;
+                var result = Client.CreateDocumentAsync(Collection.DocumentsLink, document).Result;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 //TODO
             }
+        }
+
+        public static IEnumerable<T> GetItems(Expression<Func<T, bool>> predicate = null)
+        {
+            try
+            {
+                return Client.CreateDocumentQuery<T>(Collection.DocumentsLink)
+                    .Where(predicate)
+                    .AsEnumerable();
+            }
+            catch (Exception)
+            {
+                //TODO
+            }
+
+            return new List<T>().AsEnumerable();
+        }
+        public static T GetItem(Expression<Func<T, bool>> predicate)
+        {
+            return Client.CreateDocumentQuery<T>(Collection.DocumentsLink)
+                        .Where(predicate)
+                        .AsEnumerable()
+                        .FirstOrDefault();
         }
     }
 }
