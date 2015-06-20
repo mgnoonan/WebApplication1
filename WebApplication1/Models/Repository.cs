@@ -137,25 +137,25 @@ namespace WebApplication1.Models
             }
             catch(Exception)
             {
-                //TODO
+                throw;
             }
         }
 
-        public static IEnumerable<T> GetItems(Expression<Func<T, bool>> predicate = null)
+        public static IEnumerable<T> GetItems()
         {
             try
             {
                 return Client.CreateDocumentQuery<T>(Collection.DocumentsLink)
-                    .Where(predicate)
                     .AsEnumerable();
             }
             catch (Exception)
             {
-                //TODO
+                throw;
             }
 
-            return new List<T>().AsEnumerable();
+            //return new List<T>().AsEnumerable();
         }
+
         public static T GetItem(Expression<Func<T, bool>> predicate)
         {
             return Client.CreateDocumentQuery<T>(Collection.DocumentsLink)
