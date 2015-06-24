@@ -1,5 +1,7 @@
 ﻿@{
     ViewBag.Title = "Sandbox Desktop Page";
+    
+    var request = Html.ViewContext.HttpContext.Request;
 }
 
 
@@ -35,7 +37,9 @@
 
 <div class="jumbotron">
     <h1>Desktop site</h1>
-    <p class="lead">@Html.ViewContext.HttpContext.Request.UserAgent</p>
+    <p class="lead">@request.UserAgent</p>
+    <p>IP address: @request.UserHostAddress</p>
+    <p>Referrer: @request.UrlReferrer == null ? "N/A" : request.UrlReferrer.ToString()</p>
 </div>
 
 <div class="row">
