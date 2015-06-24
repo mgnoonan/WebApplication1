@@ -32,7 +32,7 @@
             @Html.DisplayFor(modelItem => item.BrowserAgent)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IpAddress)
+            xxx.xxx.xxx.@item.IpAddress.Substring(item.IpAddress.LastIndexOf("."))
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Referrer)
