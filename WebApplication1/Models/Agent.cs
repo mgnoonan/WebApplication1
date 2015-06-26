@@ -22,7 +22,7 @@ namespace WebApplication1.Models
                 }
                 else
                 {
-                    return "xxx.xxx." + string.Join(".", this.IpAddress.Split('.').Skip(2).Take(2).ToArray());
+                    return "xxx.xxx." + string.Join(".", this.IpAddress.Split(".".ToCharArray()).Skip(2).Take(2).ToArray());
                 }
             } 
             }
