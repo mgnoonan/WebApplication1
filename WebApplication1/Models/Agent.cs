@@ -16,7 +16,7 @@ namespace WebApplication1.Models
         public string IpAddressMasked { 
             get
             {
-                if (string.IsNullOrWhitespace(this.IpAddress) || this.IpAddress.Contains(":"))
+                if (string.IsNullOrWhiteSpace(this.IpAddress) || this.IpAddress.Contains(":"))
                 {
                     return this.IpAddress;
                 }
