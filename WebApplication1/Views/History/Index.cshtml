@@ -27,9 +27,17 @@
     </tr>
 
 @foreach (var item in Model) {
+    string[] lines = item.BrowserAgent.Split(")".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.BrowserAgent)
+            @if (lines.Length > 1)
+            {
+                foreach (string line in lines.Take(lines.Length - 1))
+                {
+                    <span>@string.Format("{0})", line)</span>
+                }
+            }
+            <span>@string.Format("{0}", lines.Last())</span>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IpAddressMasked)
