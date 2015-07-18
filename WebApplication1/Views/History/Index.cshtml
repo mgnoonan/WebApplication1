@@ -37,7 +37,7 @@
                     <span>@string.Format("{0})", line)<br /></span>
                 }
             }
-            <span>@string.Format("{0}", lines.Last())</span>
+            <span>@string.Format("{0}{1}", lines.Last(), lines.Length == 1 ? ")" : "")</span>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IpAddressMasked)
