@@ -39,7 +39,7 @@ namespace WebApplication1.Models
                 }
                 else
                 {
-                    return this.Referrer.Substring(0, this.Referrer.IndexOf("?") - 1);
+                    return this.Referrer.Substring(0, this.Referrer.IndexOf("?"));
                 }
             }
         }
