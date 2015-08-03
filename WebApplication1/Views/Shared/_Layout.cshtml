@@ -31,12 +31,11 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - WebApplication1</p>
-        </footer>
     </div>
-
+    <div class="container panel-footer">
+        &copy; @DateTime.Now.Year Noonan Consulting, Inc.
+        @ViewBag.CurrentAssemblyVersion
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

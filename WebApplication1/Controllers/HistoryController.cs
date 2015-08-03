@@ -7,7 +7,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class HistoryController : Controller
+    public class HistoryController : BaseController
     {
         // GET: History
         public ActionResult Index()
