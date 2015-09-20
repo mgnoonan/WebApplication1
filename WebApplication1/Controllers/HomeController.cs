@@ -20,8 +20,9 @@ namespace WebApplication1.Controllers
                 Timestamp = DateTime.Now
             };
 
+#if !DEBUG
             Repository<Agent>.SaveDocument(agent);
-
+#endif
             return View();
         }
 
@@ -38,8 +39,9 @@ namespace WebApplication1.Controllers
                 Timestamp = DateTime.Now
             };
 
+#if !DEBUG
             Repository<Agent>.SaveDocument(agent);
-
+#endif
             return View();
         }
 
