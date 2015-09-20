@@ -15,9 +15,6 @@
             @Html.DisplayNameFor(model => model.IpAddress)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Referrer)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.PageType)
         </th>
         <th>
@@ -38,7 +35,7 @@
                 }
             }
             <span>@string.Format("{0}{1}", lines.Last(), lines.Length == 1 ? ")" : "")</span>
-            <span class="small"><em>@Html.DisplayFor(modelItem => item.ReferrerMasked)</em></span>
+            <p class="small"><strong>Referrer:</strong> <em>@Html.DisplayFor(modelItem => item.ReferrerMasked)</em></p>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IpAddressMasked)
