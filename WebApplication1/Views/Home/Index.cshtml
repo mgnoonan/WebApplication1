@@ -49,9 +49,6 @@
             If you don't know what this web site is, or why it is here, you are probably in the
             wrong place.
         </p>
-        <p>
-            NO JOSHES!!!
-        </p>
     </div>
     <div class="col-md-4">
         <h2>Targeted links</h2>
@@ -59,7 +56,7 @@
             <a class="btn btn-success" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=11152458&PluID=0&ord=%%RANDOM%%">Test link (working)</a>
         </p>
         <p>
-            <a class="btn btn-warning" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=11152490&PluID=0&ord=%%RANDOM%%">Test link (failing)</a>
+            <a class="btn btn-warning" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=11152490&PluID=0&ord=%%RANDOM%%">Test link (was failing, now working?)</a>
         </p>
     </div>
 </div>
@@ -123,28 +120,6 @@ $(document).ready(function(){
             $('.pinHref').attr('href', togetherEncoded);
 
         }
-         /*
-        // Old Method, featured products page, recipes & meals
-        else if ($('.js-pinItImage').length && $('.js-pinItDescription').length) {
-
-            // pinterest static var, does not require encoding.
-            var pinterestButton = "http://www.pinterest.com/pin/create/button/?url=";
-            // get media (image) 
-            var imgEncoded = encodeURIComponent($('.js-pinItImage')[0].src);
-            // get description
-            var description = $('.js-pinItDescription').html().trim();
-            var descriptionEncoded = encodeURIComponent(description + appendTextChecked);
-            // put them all together
-            var togetherEncoded = pinterestButton + encodeURIComponent(window.location.href) + "&media=" + imgEncoded + "&description=" + descriptionEncoded
-            $('.pinHref').attr('href', togetherEncoded);
-
-        }
-        else {
-            // since the video exists and the image does not, hide the pinterest button.
-            $('.pinIt').addClass('hide');
-        }
-        */
-    
 });
 </script>
 }
