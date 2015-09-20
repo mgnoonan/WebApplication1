@@ -35,7 +35,7 @@
                 }
             }
             <span>@string.Format("{0}{1}", lines.Last(), lines.Length == 1 ? ")" : "")</span>
-            <p class="small"><strong>Referrer:</strong> <em>@Html.DisplayFor(modelItem => item.ReferrerMasked)</em></p>
+            <p class="small"><em><strong>Referrer:</strong> @Html.DisplayFor(modelItem => item.ReferrerMasked)</em></p>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IpAddressMasked)
