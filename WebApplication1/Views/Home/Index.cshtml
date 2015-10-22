@@ -37,9 +37,13 @@
 
 <div class="jumbotron">
     <h1>Desktop site</h1>
-    <p class="lead">@request.UserAgent</p>
-    <p>IP address: @request.UserHostAddress</p>
-    <p>Referrer: @(request.UrlReferrer == null ? "N/A" : request.UrlReferrer.ToString())</p>
+    <p class="lead">Headers</p>
+    <ul>
+        @foreach(var key in Request.Headers.AllKeys)
+        {
+            <li>@key: @Request.Headers[key]</li>
+        }
+    </ul>
 </div>
 
 <div class="row">
