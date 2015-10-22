@@ -9,6 +9,9 @@ namespace WebApplication1.Controllers
     {
         public ActionResult Index()
         {
+            bool isMobile = HttpContext.Request.Headers.AllKeys.Contains("X-Mobile-Device");
+            ViewBag.IsMobile = isMobile;
+
             // Create document with incoming parameter values
             var agent = new Agent
             {
@@ -16,26 +19,7 @@ namespace WebApplication1.Controllers
                 BrowserAgent = HttpContext.Request.UserAgent,
                 IpAddress = HttpContext.Request.UserHostAddress,
                 Referrer = HttpContext.Request.UrlReferrer == null ? "" : HttpContext.Request.UrlReferrer.ToString(),
-                PageType = "Desktop",
-                Timestamp = DateTime.Now
-            };
-
-#if !DEBUG
-            Repository<Agent>.SaveDocument(agent);
-#endif
-            return View();
-        }
-
-        public ActionResult Mobile()
-        {
-            // Create document with incoming parameter values
-            var agent = new Agent
-            {
-                id = Guid.NewGuid().ToString(),
-                BrowserAgent = HttpContext.Request.UserAgent,
-                IpAddress = HttpContext.Request.UserHostAddress,
-                Referrer = HttpContext.Request.UrlReferrer == null ? "" : HttpContext.Request.UrlReferrer.ToString(),
-                PageType = "Mobile",
+                PageType = isMobile ? "Mobile" : "Desktop",
                 Timestamp = DateTime.Now
             };
 

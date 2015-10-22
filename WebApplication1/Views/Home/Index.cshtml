@@ -2,6 +2,7 @@
     ViewBag.Title = "Sandbox Desktop Page";
     
     var request = Html.ViewContext.HttpContext.Request;
+    bool isMobile = (bool)ViewBag.IsMobile;
 }
 
 
@@ -36,7 +37,7 @@
 }
 
 <div class="jumbotron">
-    <h1>Desktop site</h1>
+    <h1>@(isMobile ? "Mobile layout" : "Desktop layout")</h1>
     <p class="lead">Headers</p>
     <ul>
         @foreach(var key in Request.Headers.AllKeys)
