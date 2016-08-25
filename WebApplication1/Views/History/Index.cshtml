@@ -27,7 +27,6 @@ else {
     </tr>
 
 @foreach (var item in Model) {
-    string[] lines = item.BrowserAgent.Split(")".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
     <tr>
         <td>
             <span>@item.BrowserAgent</span>
