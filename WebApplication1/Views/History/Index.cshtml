@@ -5,7 +5,10 @@
 }
 
 <h2>Index</h2>
-
+@if (Model == null) {
+    <p>There are no items available in the history.</p>
+}
+else {
 <table class="table">
     <tr>
         <th>
@@ -56,3 +59,4 @@
 }
 
 </table>
+}
