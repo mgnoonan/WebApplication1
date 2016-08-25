@@ -30,14 +30,7 @@ else {
     string[] lines = item.BrowserAgent.Split(")".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
     <tr>
         <td>
-            @if (lines.Length > 1)
-            {
-                foreach (string line in lines.Take(lines.Length - 1))
-                {
-                    <span>@string.Format("{0})", line)<br /></span>
-                }
-            }
-            <span>@string.Format("{0}{1}", lines.Last(), lines.Length == 1 ? ")" : "")</span>
+            <span>@item.BrowserAgent</span>
             @if (!string.IsNullOrWhiteSpace(item.ReferrerMasked))
             {
             <p class="small"><br /><em><strong>Referrer:</strong> @Html.DisplayFor(modelItem => item.ReferrerMasked)</em></p>
