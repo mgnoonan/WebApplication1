@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your useless application description page.";
+            ViewBag.Message = "Your useless application description page. Just for kicks.";
 
             return View();
         }
