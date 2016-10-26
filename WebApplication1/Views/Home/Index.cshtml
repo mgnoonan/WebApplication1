@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Sandbox Desktop Page";
+    ViewBag.Title = "Mobile User Agent Detection Page";
     
     var request = Html.ViewContext.HttpContext.Request;
     bool isMobile = (bool)ViewBag.IsMobile;
@@ -7,37 +7,10 @@
 
 
 @section headers {
-<meta property="fb:app_id" content="218770528164917" />
-<meta property="og:title" content="Fiesta Chicken Shells With Piña Colada Fruit" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://webapplication18305.azurewebsites.net/" />
-<meta property="og:site_name" content="Publix Super Markets" />
-<meta property="og:description" content="Fiesta Chicken Shells With Piña Colada Fruit" />
-<meta property="og:image" content="http://www.publix.com/~/media/aprons/images/2014/11/14/17/44/poul0167_600x440.ashx" />
-<style>
-    .socialIcons {
-        width: 300px;
-        height: 31px;
-        margin-bottom: 10px;
-    }
-
-        .socialIcons .facebookLike {
-            float: left;
-            height: 30px;
-            margin-right: 15px;
-        }
-
-        .socialIcons .pinIt {
-            float: left;
-            height: 26px;
-            width: 75px;
-            margin-right: 15px;
-        }
-</style>
 }
 
 <div class="jumbotron">
-    <h1>@(isMobile ? "Mobile layout" : "Desktop layout")</h1>
+    <h1>@(isMobile ? "Mobile user agent" : "Desktop user agent")</h1>
     <p class="lead">Headers</p>
     <ul>
         @foreach(var key in Request.Headers.AllKeys)
@@ -49,82 +22,22 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Sandbox rules</h2>
+        <h2>Why are we here?</h2>
         <p>
-            If you don't know what this web site is, or why it is here, you are probably in the
-            wrong place.
+            This site uses your browser's user agent to detect if you are using a mobile device. If the rules are functioning properly, you will see "Mobile user agent" when
+            testing a mobile device, and "Desktop user agent" for all other devices.
+        </p>
+        <p>
+            You can also visit the <a href="/History">History</a> to see a list of recent browser agents.
         </p>
     </div>
     <div class="col-md-4">
-        <h2>Targeted links</h2>
+        <h2>Contributions welcome!</h2>
         <p>
-            <a class="btn btn-success" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=11152458&PluID=0&ord=%%RANDOM%%">Test link (working)</a>
+            Submit a PR at our <a href="https://github.com/mgnoonan/WebApplication1">GitHub repo</a>.
         </p>
-        <p>
-            <a class="btn btn-success" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=11152490&PluID=0&ord=%%RANDOM%%">Test link (was failing, now working?)</a>
-        </p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <div class="socialIcons">
-            <div id="fb-root"></div>
-            <div class="facebookLike">
-                <div class="fb-like" data-href="" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
-            </div>
-            <div class="pinIt">
-                <a class="pinHref" href="" target="_blank" data-pin-do="buttonPin" data-pin-config="beside">
-                    <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" />
-                </a>
-            </div>
-        </div>
     </div>
 </div>
 
 @section scripts {
-    
-<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
-
-
-<script>
-$(document).ready(function(){
-    var facebookLike = function facebookImplementation() {
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '218770528164917',
-                xfbml: true,
-                version: 'v2.0'
-            });
-        };
-
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js&version=v2.0";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    }
-    facebookLike();
-    
-        var appendTextChecked="";
-   
-       // New Version of Pinterest through SocialTools.ascx
-        if ($('meta[property="og:image"]').attr('content') && $('meta[property="og:description"]').attr('content')) {
-
-            // pinterest static var, does not require encoding.
-            var pinterestButton = "http://www.pinterest.com/pin/create/button/?url=";
-            // get media (image) 
-            var imgEncoded = encodeURIComponent($('meta[property="og:image"]').attr('content'));
-            // get description
-            var description = $('meta[property="og:description"]').attr('content').trim();
-            var descriptionEncoded = encodeURIComponent(description + appendTextChecked);
-            // put them all together
-            var togetherEncoded = pinterestButton + encodeURIComponent(window.location.href) + "&media=" + imgEncoded + "&description=" + descriptionEncoded
-            $('.pinHref').attr('href', togetherEncoded);
-
-        }
-});
-</script>
 }
