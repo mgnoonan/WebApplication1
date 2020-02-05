@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Mobile User Agent Detection Page";
+
+    var request = Html.ViewContext.HttpContext.Request;
+    bool isMobile = false; // (bool)ViewBag.IsMobile;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div class="jumbotron">
+    <h1>@(isMobile ? "Mobile user agent" : "Desktop user agent")</h1>
+    <p class="lead">Headers</p>
+    <ul>
+        @foreach (var key in request.Headers.Keys)
+        {
+            <li>@key: @request.Headers[key]</li>
+        }
+    </ul>
+</div>
