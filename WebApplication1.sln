@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22310.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{2EC4EC8D-724C-4E0A-8C2E-56DA4A313894}"
 EndProject
@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configura
 		PublishScripts\Configurations\WebApplication1-WAWS-dev.json = PublishScripts\Configurations\WebApplication1-WAWS-dev.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication2", "WebApplication2\WebApplication2.csproj", "{E0DFC63F-1B71-471F-BF79-1BB3F6563FBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,11 +28,18 @@ Global
 		{2EC4EC8D-724C-4E0A-8C2E-56DA4A313894}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EC4EC8D-724C-4E0A-8C2E-56DA4A313894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EC4EC8D-724C-4E0A-8C2E-56DA4A313894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0DFC63F-1B71-471F-BF79-1BB3F6563FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0DFC63F-1B71-471F-BF79-1BB3F6563FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0DFC63F-1B71-471F-BF79-1BB3F6563FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0DFC63F-1B71-471F-BF79-1BB3F6563FBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8CC7F119-162A-45E8-B3D5-51F82804724E} = {7380E3E0-C502-4C36-A5A4-B61085735932}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7954E872-02E9-4273-B7E4-884DA047BABC}
 	EndGlobalSection
 EndGlobal
