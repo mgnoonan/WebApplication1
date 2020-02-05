@@ -2,7 +2,7 @@
     ViewData["Title"] = "Mobile User Agent Detection Page";
 
     var request = Html.ViewContext.HttpContext.Request;
-    bool isMobile = false; // (bool)ViewBag.IsMobile;
+    bool isMobile = (bool)ViewBag.IsMobile;
 }
 
 <div class="text-center">

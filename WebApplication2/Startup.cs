@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,6 +41,16 @@ namespace WebApplication2
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // Setup any redirects and the mobile agent detection rule
+            using (StreamReader reader = File.OpenText("IISUrlRewrite.xml"))
+            {
+                var options = new RewriteOptions()
+                    .AddIISUrlRewrite(reader);
+
+                app.UseRewriter(options);
+            }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
