@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
+using Serilog;
 using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
@@ -34,6 +32,8 @@ namespace WebApplication2.Controllers
                 PageType = isMobile ? "Mobile" : "Desktop",
                 Timestamp = DateTime.Now
             };
+
+            Log.Information("Detected user info: {Agent}", agent);
 
             return View();
         }
