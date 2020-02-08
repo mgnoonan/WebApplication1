@@ -39,7 +39,8 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - WebApplication2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year Noonan Consulting, Inc. - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            @ViewBag.CurrentAssemblyVersion
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
