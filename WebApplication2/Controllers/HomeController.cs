@@ -33,7 +33,7 @@ namespace WebApplication2.Controllers
                 Timestamp = DateTime.Now
             };
 
-            Log.Information("Detected user info: {Agent}", agent);
+            Log.Information("Detected user info: {@Agent}", agent);
 
             return View();
         }
