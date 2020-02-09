@@ -12,7 +12,7 @@
 </div>
 <div class="jumbotron">
     <h1>@(isMobile ? "Mobile" : "Desktop") browser detected</h1>
-    <p>IP Address: @ipAddress</p>
+    <p>IP Address: <pre>@ipAddress</pre></p>
     <p>Browser agent: <pre>@request.Headers["User-Agent"]</pre></p>
     <p class="lead">All Headers</p>
     <ul>

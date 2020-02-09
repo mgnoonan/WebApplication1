@@ -83,7 +83,7 @@ namespace WebApplication2.Controllers
                 .TrimEnd(',')
                 .Split(',')
                 .AsEnumerable<string>()
-                .Select(s => s.Trim())
+                .Select(s => s.Trim().Split(":")[0])
                 .ToList();
         }
     }
