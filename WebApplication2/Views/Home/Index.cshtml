@@ -7,18 +7,20 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p><a href="/robots.txt">Don't click this!</a>.</p>
+    <h1 class="display-4">@(isMobile ? "Mobile" : "Desktop") browser detected</h1>
+    <p><a href="/robots.txt">Don't click this!</a></p>
+    <p><a asp-area="" asp-controller="Home" asp-action="Privacy">Seriously, don't click this! I mean it!</a></p>
 </div>
 <div class="jumbotron">
-    <h1>@(isMobile ? "Mobile" : "Desktop") browser detected</h1>
-    <p>IP Address: <pre>@ipAddress</pre></p>
-    <p>Browser agent: <pre>@request.Headers["User-Agent"]</pre></p>
+    <p class="lead">IP Address</p>
+    <p><pre>@ipAddress</pre></p>
+    <p class="lead">Browser Agent</p>
+    <p><pre>@request.Headers["User-Agent"]</pre></p>
     <p class="lead">All Headers</p>
     <ul>
         @foreach (var key in request.Headers.Keys)
         {
-            <li>@key: @request.Headers[key]</li>
+            <li><strong>@key:</strong> @request.Headers[key]</li>
         }
     </ul>
 </div>

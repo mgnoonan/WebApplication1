@@ -74,7 +74,7 @@ namespace WebApplication2.Controllers
             return default;
         }
 
-        public static List<string> SplitCsv(string csvList, bool nullOrWhitespaceInputReturnsNull = false)
+        private List<string> SplitCsv(string csvList, bool nullOrWhitespaceInputReturnsNull = false)
         {
             if (string.IsNullOrWhiteSpace(csvList))
                 return nullOrWhitespaceInputReturnsNull ? null : new List<string>();
