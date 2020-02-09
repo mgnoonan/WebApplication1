@@ -3,6 +3,7 @@
 
     var request = Html.ViewContext.HttpContext.Request;
     bool isMobile = (bool)ViewBag.IsMobile;
+    string ipAddress = ViewBag.IpAddress;
 }
 
 <div class="text-center">
@@ -11,6 +12,7 @@
 </div>
 <div class="jumbotron">
     <h1>@(isMobile ? "Mobile" : "Desktop") browser detected</h1>
+    <p>IP Address: @ipAddress</p>
     <p>Browser agent: <pre>@request.Headers["User-Agent"]</pre></p>
     <p class="lead">All Headers</p>
     <ul>

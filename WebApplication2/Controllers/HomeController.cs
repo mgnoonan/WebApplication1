@@ -21,6 +21,7 @@ namespace WebApplication2.Controllers
         {
             bool isMobile = base.IsMobile();  // HttpContext.Request.Headers.ContainsKey("X-Mobile-Device");
             ViewBag.IsMobile = isMobile;
+            ViewBag.IpAddress = base.GetRequestIP();
 
             // Create document with incoming parameter values
             var agent = new Agent
