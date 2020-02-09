@@ -7,11 +7,12 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p><a href="/robots.txt">Don't click this!</a>.</p>
 </div>
 <div class="jumbotron">
-    <h1>@(isMobile ? "Mobile user agent" : "Desktop user agent")</h1>
-    <p class="lead">Headers</p>
+    <h1>@(isMobile ? "Mobile" : "Desktop") browser detected</h1>
+    <p>Browser agent: <pre>@request.Headers["User-Agent"]</pre></p>
+    <p class="lead">All Headers</p>
     <ul>
         @foreach (var key in request.Headers.Keys)
         {

@@ -19,7 +19,7 @@ namespace WebApplication2.Controllers
 
         public IActionResult Index()
         {
-            bool isMobile = HttpContext.Request.Headers.ContainsKey("X-Mobile-Device");
+            bool isMobile = base.IsMobile();  // HttpContext.Request.Headers.ContainsKey("X-Mobile-Device");
             ViewBag.IsMobile = isMobile;
 
             // Create document with incoming parameter values
