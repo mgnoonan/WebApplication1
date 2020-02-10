@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Serilog;
 using WebApplication2.Models;
@@ -10,13 +10,6 @@ namespace WebApplication2.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
             bool isMobile = base.IsMobile();  // HttpContext.Request.Headers.ContainsKey("X-Mobile-Device");
@@ -42,6 +35,14 @@ namespace WebApplication2.Controllers
         public IActionResult Privacy()
         {
             throw new NotImplementedException("Forget something?");
+        }
+
+        public IActionResult Test()
+        {
+            // TODO: This is for the test, remove before launch
+            Thread.Sleep(6000);
+
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
