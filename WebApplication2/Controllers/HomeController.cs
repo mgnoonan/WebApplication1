@@ -40,9 +40,12 @@ namespace WebApplication2.Controllers
 
         public IActionResult Test()
         {
+            Log.Information("Starting test at {ts}", DateTime.Now);
+
             // TODO: This is for the test, remove before launch
             Thread.Sleep(6000);
 
+            Log.Information("Ending test at {ts}", DateTime.Now);
             return View();
         }
 
