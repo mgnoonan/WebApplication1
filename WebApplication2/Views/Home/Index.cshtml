@@ -3,7 +3,8 @@
 
     var request = Html.ViewContext.HttpContext.Request;
     bool isMobile = (bool)ViewBag.IsMobile;
-    string ipAddress = ViewBag.IpAddress;
+    string ipAddress = ViewBag.ActualIpAddress;
+    string ipAddress2 = ViewBag.ReportedIpAddress;
 }
 
 <div class="text-center">
@@ -12,7 +13,9 @@
     <p><a asp-area="" asp-controller="Home" asp-action="Privacy">Seriously, don't click this! I mean it!</a></p>
 </div>
 <div class="jumbotron">
-    <p class="lead">IP Address</p>
+    <p class="lead">Reported IP Address</p>
+    <p><pre>@ipAddress2</pre></p>
+    <p class="lead">Actual IP Address</p>
     <p><pre>@ipAddress</pre></p>
     <p class="lead">Browser Agent</p>
     <p><pre>@request.Headers["User-Agent"]</pre></p>
