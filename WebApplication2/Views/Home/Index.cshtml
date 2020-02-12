@@ -13,13 +13,11 @@
     <p><a asp-area="" asp-controller="Home" asp-action="Privacy">Seriously, don't click this! I mean it!</a></p>
 </div>
 <div class="jumbotron">
-    <p class="lead">Reported IP Address</p>
-    <p><pre>@ipAddress2</pre></p>
-    <p class="lead">Actual IP Address</p>
+    <p class="lead">Your IP Address</p>
     <p><pre>@ipAddress</pre></p>
-    <p class="lead">Browser Agent</p>
+    <p class="lead">Your Browser Agent</p>
     <p><pre>@request.Headers["User-Agent"]</pre></p>
-    <p class="lead">All Headers</p>
+    <p class="lead">All Request Headers</p>
     <ul>
         @foreach (var key in request.Headers.Keys)
         {

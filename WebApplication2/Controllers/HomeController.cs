@@ -4,6 +4,7 @@ using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Serilog;
+using Serilog.Context;
 using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
@@ -40,13 +41,23 @@ namespace WebApplication2.Controllers
 
         public IActionResult Test()
         {
+            using (LogContext.PushProperty("TestId", DateTime.Now.Second))
+            {
+                RunTest();
+            }
+
+            return View();
+        }
+
+        private static void RunTest()
+        {
             Log.Information("Starting test at {ts}", DateTime.Now);
 
             // TODO: This is for the test, remove before launch
+            Log.Information("Executing test method A");
             Thread.Sleep(6000);
 
             Log.Information("Ending test at {ts}", DateTime.Now);
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
