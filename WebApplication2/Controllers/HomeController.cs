@@ -34,32 +34,6 @@ namespace WebApplication2.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            throw new NotImplementedException("Forget something?");
-        }
-
-        public IActionResult Test()
-        {
-            using (LogContext.PushProperty("TestId", DateTime.Now.Second))
-            {
-                RunTest();
-            }
-
-            return View();
-        }
-
-        private static void RunTest()
-        {
-            Log.Information("Starting test at {ts}", DateTime.Now);
-
-            // TODO: This is for the test, remove before launch
-            Log.Information("Executing test method A");
-            Thread.Sleep(6000);
-
-            Log.Information("Ending test at {ts}", DateTime.Now);
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
