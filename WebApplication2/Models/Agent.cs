@@ -1,46 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿namespace WebApplication2.Models;
 
-namespace WebApplication2.Models
+public record Agent
 {
-    public class Agent
-    {
-        public string id { get; set; }
-        public string BrowserAgent { get; set; }
-        public string IpAddress { get; set; }
-        public string Referrer { get; set; }
-        public string PageType { get; set; }
-        public DateTime Timestamp { get; set; }
+    public string id { get; set; }
+    public string BrowserAgent { get; set; }
+    public string IpAddress { get; set; }
+    public string Referrer { get; set; }
+    public string PageType { get; set; }
+    public DateTime Timestamp { get; set; }
 
-        public string IpAddressMasked
+    public string IpAddressMasked
+    {
+        get
         {
-            get
+            if (string.IsNullOrWhiteSpace(this.IpAddress) || this.IpAddress.Contains(":"))
             {
-                if (string.IsNullOrWhiteSpace(this.IpAddress) || this.IpAddress.Contains(":"))
-                {
-                    return this.IpAddress;
-                }
-                else
-                {
-                    return "xxx.xxx." + string.Join(".", this.IpAddress.Split(".".ToCharArray()).Skip(2).Take(2).ToArray());
-                }
+                return this.IpAddress;
+            }
+            else
+            {
+                return "xxx.xxx." + string.Join(".", this.IpAddress.Split(".".ToCharArray()).Skip(2).Take(2).ToArray());
             }
         }
+    }
 
-        public string ReferrerMasked
+    public string ReferrerMasked
+    {
+        get
         {
-            get
+            if (string.IsNullOrWhiteSpace(this.Referrer) || !this.Referrer.Contains("?"))
             {
-                if (string.IsNullOrWhiteSpace(this.Referrer) || !this.Referrer.Contains("?"))
-                {
-                    return this.Referrer;
-                }
-                else
-                {
-                    return this.Referrer.Substring(0, this.Referrer.IndexOf("?"));
-                }
+                return this.Referrer;
+            }
+            else
+            {
+                return this.Referrer.Substring(0, this.Referrer.IndexOf("?"));
             }
         }
     }

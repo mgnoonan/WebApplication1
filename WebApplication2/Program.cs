@@ -1,72 +1,78 @@
-using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.ApplicationInsights;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Serilog;
-using Serilog.Events;
 
-namespace WebApplication2
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+
+Log.Information("Starting up");
+
+try
 {
-    public class Program
+    var builder = WebApplication.CreateBuilder(args);
+
+    // Add Serilog
+    builder.Host.UseSerilog((hostingContext, services, loggerConfiguration) =>
     {
-        public static int Main(string[] args)
-        {
-            // Create the Serilog logger, and configure the sinks
-            //Log.Logger = new LoggerConfiguration()
-            //    .MinimumLevel.Information()
-            //    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            //    // Filter out ASP.NET Core infrastructre logs that are Information and below
-            //    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
-            //    .Enrich.FromLogContext()
-            //    .WriteTo.ApplicationInsights(TelemetryConfiguration.CreateDefault(), TelemetryConverter.Events)
-            //    //.WriteTo.Console()
-            //    //.WriteTo.Seq("http://localhost:5341")
-            //    .CreateLogger();
+        var client = services.GetRequiredService<TelemetryClient>();
 
-            // Wrap creating and running the host in a try-catch block
-            //try
-            //{
-            //    //Log.Information("Starting host");
-            CreateHostBuilder(args).Build().Run();
-            return 0;
-            //}
-            //catch (Exception ex)
-            //{
-            //    //Log.Fatal(ex, "Host terminated unexpectedly");
-            //    return 1;
-            //}
-            //finally
-            //{
-            //    //Log.CloseAndFlush();
-            //}
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder
-                        .ConfigureLogging((hostingContext, logging) => logging.ClearProviders())
-                        .UseSerilog((hostingContext, loggerConfiguration) =>
-                        {
-                            var telemetryConfiguration = TelemetryConfiguration.CreateDefault();
-                            telemetryConfiguration.InstrumentationKey = hostingContext.Configuration["ApplicationInsights:InstrumentationKey"];
-
-                            loggerConfiguration
-                                .MinimumLevel.Information()
-                                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                                .MinimumLevel.Override("System", LogEventLevel.Warning)
+        loggerConfiguration
+            .MinimumLevel.Information()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .MinimumLevel.Override("System", LogEventLevel.Warning)
 #if DEBUG
-                        .MinimumLevel.Verbose()
-                                .WriteTo.Console()
-                                .WriteTo.Debug()
-                                .WriteTo.Seq("http://localhost:5341")       // docker run --rm -it -e ACCEPT_EULA=Y -p 5341:80 datalust/seq
+            .MinimumLevel.Debug()
+            .WriteTo.Console()
+            .WriteTo.Debug()
+            .WriteTo.Seq("http://localhost:5341")       // docker run --rm -it -e ACCEPT_EULA=Y -p 5341:80 datalust/seq:latest
 #endif
-                        .Enrich.FromLogContext()
-                                .Enrich.WithMachineName()
-                                .WriteTo.ApplicationInsights(telemetryConfiguration, TelemetryConverter.Traces);
-                        })
-                        .UseStartup<Startup>();
-                });
+            .Enrich.FromLogContext()
+            .Enrich.WithMachineName()
+            .WriteTo.ApplicationInsights(client, TelemetryConverter.Traces);
+    });
+
+    // Add services to the container.
+    builder.Services.AddControllersWithViews();
+    builder.Services.AddApplicationInsightsTelemetry();
+    var app = builder.Build();
+
+    if (builder.Environment.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
     }
+    else
+    {
+        app.UseExceptionHandler("/Home/Error");
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
+    }
+
+    app.MapControllers();
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
+
+    app.UseSerilogRequestLogging(opts => opts.EnrichDiagnosticContext = LogHelper.EnrichFromRequest);
+
+    app.UseRouting();
+
+    app.UseAuthorization();
+
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+    });
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Unhandled exception");
+}
+finally
+{
+    Log.Information("Shutdown complete");
+    Log.CloseAndFlush();
 }
