@@ -20,7 +20,7 @@ try
 
         loggerConfiguration
             .MinimumLevel.Information()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
             .MinimumLevel.Override("System", LogEventLevel.Warning)
 #if DEBUG
             .MinimumLevel.Debug()
