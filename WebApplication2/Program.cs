@@ -16,6 +16,7 @@ try
     builder.Host.UseSerilog((hostingContext, services, loggerConfiguration) =>
     {
         var client = services.GetRequiredService<TelemetryClient>();
+        client.ConnectionString = hostingContext.Configuration["ApplicationInsights:ConnectionString"];
 
         loggerConfiguration
             .MinimumLevel.Information()
