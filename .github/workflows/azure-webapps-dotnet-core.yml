@@ -17,7 +17,7 @@
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
 
-name: Build and deploy ASP.Net Core app to an Azure Web App
+name: WebApplication18305 App Service CI/CD
 
 env:
   AZURE_WEBAPP_NAME: WebApplication18305    # set this to the name of your Azure Web App
@@ -49,6 +49,20 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
+
+      - name: Show GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: Output run number
+        run: echo "${{github.run_number}}" > ./WebApplication2/.buildinfo.json
+
+      - name: Output workflow
+        run: echo "${{github.workflow}}" >> ./WebApplication2/.buildinfo.json
+
+      - name: Output commit hash
+        run: echo "${{github.sha}}" >> ./WebApplication2/.buildinfo.json
 
       - name: Build with dotnet
         run: dotnet build --configuration Release

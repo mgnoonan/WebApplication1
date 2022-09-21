@@ -20,7 +20,7 @@ try
 
         loggerConfiguration
             .MinimumLevel.Information()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .MinimumLevel.Override("System", LogEventLevel.Warning)
 #if DEBUG
             .MinimumLevel.Debug()
@@ -32,6 +32,8 @@ try
             .Enrich.WithMachineName()
             .WriteTo.ApplicationInsights(client, TelemetryConverter.Traces);
     });
+
+    builder.Services.AddSingleton<AppVersionInfo>();
 
     // Add services to the container.
     builder.Services.AddControllersWithViews();
