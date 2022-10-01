@@ -1,5 +1,4 @@
 using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 
@@ -60,13 +59,9 @@ try
     app.UseRouting();
 
     app.UseAuthorization();
-
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
-    });
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
     app.Run();
 }
