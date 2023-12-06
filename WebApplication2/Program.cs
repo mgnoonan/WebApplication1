@@ -48,9 +48,6 @@ try
     {
         app.UseExceptionHandler("/Home/Error");
 
-        context.Response.Headers.Remove("X-Powered-By");
-        context.Response.Headers.Append("permissions-policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()");
-
         // Add recommended OWASP security headers
         app.UseSecureHeadersMiddleware(SecureHeadersMiddlewareExtensions.BuildDefaultConfiguration());
     }
@@ -64,6 +61,13 @@ try
     app.UseRouting();
 
     app.UseAuthorization();
+    app.Use(async (context, next) =>
+    {
+        context.Response.Headers.Remove("X-Powered-By");
+        context.Response.Headers.Append("permissions-policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()");
+        await next();
+    });
+
     app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
